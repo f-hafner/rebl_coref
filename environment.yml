@@ -9,5 +9,6 @@ dependencies:
   - pandas 
   - matplotlib
   - pyarrow
+  - pip 
 
 # it works without pyarrow, and with python==3.8
