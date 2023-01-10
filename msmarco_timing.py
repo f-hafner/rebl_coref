@@ -7,6 +7,7 @@ import pickle
 import pandas as pd
 import time 
 import argparse
+import pdb 
 
 
 from REL.entity_disambiguation import EntityDisambiguation
@@ -55,34 +56,43 @@ stream_raw_source_file = input_stream_gen_lines(source_file) # one item = one do
 
 
 measurements = {}
+run_files = False
 
 
 ## iterate over documents, run ED and save timing/number of mentions
-for index, doc in zip(range(args.n_docs), stream_raw_source_file):
-    json_content = json.loads(doc)
-    # doc0 = next(stream_raw_source_file)
-    # json_content = json.loads(doc0)
+for idx, doc in zip(range(args.n_docs), stream_raw_source_file):
+    if idx < 2800: 
+        pass
+    else: # the last docid printed in the log file is msmarco_doc_00_28937045. There may be another file before that I missed. 
+        json_content = json.loads(doc)
+        # doc0 = next(stream_raw_source_file)
+        # json_content = json.loads(doc0)
 
-    # extract items for format_spans
-    current_text = json_content["body"]
+        # extract items for format_spans
+        current_text = json_content["body"]
 
-    docid = json_content["docid"]
-    print(f"docid is {docid}")
-    d_doc = d.loc[d["identifier"] == docid, :].copy()
-    d_doc['length'] = d_doc["end_pos"] - d_doc["start_pos"]
-    spans = list(d_doc.loc[:, ["start_pos", "length"]].to_records(index=False))
+        docid = json_content["docid"]
+        if docid == "msmarco_doc_00_28937045": # only run after this file was seen. when using flush: msmarco_doc_00_28953614
+            run_files = True   # msmarco_doc_00_28953614 is the document with 15109 mentions 
+        
+        if docid == "msmarco_doc_00_28953614":
+            print(f"docid is {docid}", flush=True)
+            d_doc = d.loc[d["identifier"] == docid, :].copy()
+            d_doc['length'] = d_doc["end_pos"] - d_doc["start_pos"]
+            spans = list(d_doc.loc[:, ["start_pos", "length"]].to_records(index=False))
 
 
-    processed = {f"{docid}": [current_text, spans]}
-    mentions_dataset, total_ment = mention_detection.format_spans(processed)
-    
-    start = time.time()
-    predictions, timing = ed_model.predict(mentions_dataset)
-    end = time.time()
-    time_ed = end - start 
+            processed = {f"{docid}": [current_text, spans]}
+            mentions_dataset, total_ment = mention_detection.format_spans(processed)
+            
+            pdb.set_trace()
+            start = time.time()
+            predictions, timing = ed_model.predict(mentions_dataset)
+            end = time.time()
+            time_ed = end - start 
 
-    out = {"n_mentions": total_ment, "timing_ed": time_ed}
-    measurements[docid] = out
+            out = {"n_mentions": total_ment, "timing_ed": time_ed}
+            measurements[docid] = out
 
 
 filename = f"{datapath}timing/ed_coref_ndocs_{args.n_docs}_{args.search_corefs}"

@@ -53,5 +53,8 @@
 
 # ## Efficiency: disambiguate by document 
 # python3 msmarco_timing.py --n_docs 5000 --search_corefs "all" &> timing_ed_coref_all.log
-python3 msmarco_timing.py --n_docs 5000 --search_corefs "lsh" &> timing_ed_coref_lsh.log
+# python3 msmarco_timing.py --n_docs 5000 --search_corefs "lsh" &> timing_ed_coref_lsh.log
 # python3 msmarco_timing.py --n_docs 5000 --search_corefs "off" &> timing_ed_coref_off.log
+
+
+python3 msmarco_largedoc_memory.py --n_docs 5000 --search_corefs "lsh" 
