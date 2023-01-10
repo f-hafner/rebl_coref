@@ -7,7 +7,7 @@ import pickle
 import pandas as pd
 import time 
 import argparse
-
+from memory_profiler import profile 
 
 from REL.entity_disambiguation import EntityDisambiguation
 from REL.mention_detection import MentionDetection
@@ -56,40 +56,40 @@ stream_raw_source_file = input_stream_gen_lines(source_file) # one item = one do
 
 measurements = {}
 
+@profile 
+def process_data():
+    ## iterate over documents, run ED and save timing/number of mentions
+    for idx, doc in zip(range(args.n_docs), stream_raw_source_file):
+        print(f"idx is {idx}")
+        if idx == 60: # program seems to get stuck 
+            pass 
+        else:
+            json_content = json.loads(doc)
+            # doc0 = next(stream_raw_source_file)
+            # json_content = json.loads(doc0)
 
-## iterate over documents, run ED and save timing/number of mentions
-for index, doc in zip(range(args.n_docs), stream_raw_source_file):
-    json_content = json.loads(doc)
-    # doc0 = next(stream_raw_source_file)
-    # json_content = json.loads(doc0)
+            # extract items for format_spans
+            current_text = json_content["body"]
 
-    # extract items for format_spans
-    current_text = json_content["body"]
-
-    docid = json_content["docid"]
-    print(f"docid is {docid}")
-    d_doc = d.loc[d["identifier"] == docid, :].copy()
-    d_doc['length'] = d_doc["end_pos"] - d_doc["start_pos"]
-    spans = list(d_doc.loc[:, ["start_pos", "length"]].to_records(index=False))
-
-
-    processed = {f"{docid}": [current_text, spans]}
-    mentions_dataset, total_ment = mention_detection.format_spans(processed)
-    
-    start = time.time()
-    predictions, timing = ed_model.predict(mentions_dataset)
-    end = time.time()
-    time_ed = end - start 
-
-    out = {"n_mentions": total_ment, "timing_ed": time_ed}
-    measurements[docid] = out
+            docid = json_content["docid"]
+            # print(f"docid is {docid}")
+            d_doc = d.loc[d["identifier"] == docid, :].copy()
+            d_doc['length'] = d_doc["end_pos"] - d_doc["start_pos"]
+            spans = list(d_doc.loc[:, ["start_pos", "length"]].to_records(index=False))
 
 
-filename = f"{datapath}timing/ed_coref_ndocs_{args.n_docs}_{args.search_corefs}"
+            processed = {f"{docid}": [current_text, spans]}
+            mentions_dataset, total_ment = mention_detection.format_spans(processed)
+            
+            start = time.time()
+            predictions, timing = ed_model.predict(mentions_dataset)
+            end = time.time()
+            time_ed = end - start 
 
+            out = {"n_mentions": total_ment, "timing_ed": time_ed}
+            measurements[docid] = out
 
-with open(f"{filename}.pickle", "wb") as f:
-    pickle.dump(measurements, f, protocol=pickle.HIGHEST_PROTOCOL)        
+process_data()
 
 
 print("Done.")
