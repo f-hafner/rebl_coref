@@ -69,7 +69,7 @@ for idx, doc in zip(range(args.n_docs), stream_raw_source_file):
     docid = json_content["docid"]
     # if docid == "msmarco_doc_00_28937045": # only run after this file was seen. when using flush: msmarco_doc_00_28953614
     #     run_files = True   # msmarco_doc_00_28953614 is the document with 15109 mentions 
-    
+
     # if docid == "msmarco_doc_00_28953614":
     print(f"docid is {docid}", flush=True)
     d_doc = d.loc[d["identifier"] == docid, :].copy()

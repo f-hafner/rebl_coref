@@ -1,6 +1,6 @@
 
 
-"Time the execution of ED with the msmarco data for a document with many mentions"
+"Test the execution of ED with the msmarco data for a document with many mentions"
 
 # run with python3 msmarco_largedoc_memory.py --n_docs 5000 --search_corefs "lsh"
 
