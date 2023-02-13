@@ -1,17 +1,40 @@
 # rebl_coref
-Use REBL with development version of REL for coref
+The scripts in this repo run some experiments of REL with the msmarco data.
 
 
+### TODO
+- create necessary directories
+- activate conda environment before running 
 
-# use conda environment, development version of REL, and changed version of REBL in local folder. ie: 
-# activate conda ./env; pip install ../REBL/.; pip install -e ../REL/.
-    # try to change this to use my REL fork in the requirements
 
+## Usage
+```bash
+cd some_empty_directory
 
-# this is not necessary, the input file for the next step is already available 
-# python -m rebl.md.mention_detection \
-#     --in_file "../data/msmarco/msmarco_doc_00_5k.gz" \
-#     --out_file "output/md.parquet" 
+# Install
+# when PR https://github.com/informagi/REL/pull/153 is merged, clone REL directly
+git clone -b flavio/coref-lsh git@github.com:f-hafner/REL.git 
+git clone -b lsh-integration git@github.com:informagi/REBL.git # needs https://github.com/informagi/REBL/pull/8 to be merged
+git clone git@github.com:f-hafner/rebl_coref.git
 
-# pip install ../REBL/.
-# pip install -e ../REL/.
+# set up environment
+cd rebl_coref
+conda activate 
+conda env create --prefix ./env --file environment.yml
+
+conda activate ./env
+pip install ../REBL/
+pip install -e ../REL/.
+
+# Run 
+bash pipeline.sh
+```
+
+The script `pipepline.sh` needs three main parameters:
+- `DATA_URL`
+- `COREF_OPTIONS`: the options to use for coreference search, according to the implementation in REL 
+- `NDOCS_TIMING`: number of documents to process in the timing step 
+
+The `DATA_URL` is the location of all the data needed, and also where the output data is stored:
+- pre-existing directories: ed-wiki-2019, generic, wiki_2019. Download: see XXX
+- create empty directories if they do not exist: msmarco, efficiency_test. XXX: what to put in there before? efficiency_test is needed not here, but in REL/scripts. combine all in one? rename the directory/repository?

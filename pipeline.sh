@@ -1,15 +1,11 @@
 #!/bin/bash
 
-# TODO: create all the necessary directories 
-# TODO: activate conda environment before running this 
-
-
 # Set parameters
 DATA_URL="/var/scratch/fhafner/rel_data/"
 COREF_OPTIONS=("all" "off" "lsh")
-NDOCS=1000
+NDOCS_TIMING=1000
 
-MDFILE="${DATA_URL}/msmarco/sample_1k_longdocs.parquet"
+MDFILE="${DATA_URL}/msmarco/sample_1k_longdocs.parquet" # file with detected mentions
 SOURCEFILE="${DATA_URL}/msmarco/sample_1k_longdocs.gz"
 
 # Run 
@@ -32,5 +28,5 @@ for option in ${COREF_OPTIONS[@]}; do
         &> $logfile_ed
     
     # ## Efficiency: disambiguate by document 
-    python msmarco_timing.py --n_docs $NDOCS --search_corefs $option &> $logfile_timing
+    python msmarco_timing.py --n_docs $NDOCS_TIMING --search_corefs $option &> $logfile_timing
 done 
