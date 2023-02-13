@@ -35,7 +35,7 @@ args = parser.parse_args()
 print(f"args.search_corefs is {args.search_corefs}")
 
 
-base_url = "/home/flavio/projects/rel20/data"
+base_url = "/var/scratch/fhafner/rel_data/" 
 wiki_version = "wiki_2019" 
 config = {
         "mode": "eval",
@@ -46,12 +46,12 @@ config = {
 mention_detection = MentionDetection(base_url, wiki_version)
 ed_model = EntityDisambiguation(base_url, wiki_version, config, reset_embeddings=True, search_corefs=args.search_corefs)
 
-datapath = "../data/msmarco/"
+datapath = "/var/scratch/fhafner/rel_data/msmarco/" 
 
-d = pd.read_parquet(f"{datapath}msmarco_doc_md_00_5k.parquet")
+d = pd.read_parquet(f"{datapath}sample_1k_longdocs.parquet")
 
 # load the text file 
-source_file = "../data/msmarco/msmarco_doc_00_5k.gz" 
+source_file = f"{datapath}/sample_1k_longdocs.gz" 
 stream_raw_source_file = input_stream_gen_lines(source_file) # one item = one document 
 
 
