@@ -8,6 +8,15 @@ NDOCS_TIMING=1000
 MDFILE="${DATA_URL}/msmarco/sample_1k_longdocs.parquet" # file with detected mentions
 SOURCEFILE="${DATA_URL}/msmarco/sample_1k_longdocs.gz"
 
+# some housecleaning
+dirs_to_create=(logs "${DATA_URL}msmarco/predictions/" "${DATA_URL}msmarco/timing/")
+for directory in ${dirs_to_create[@]}; do
+    if [ ! -d $directory ]
+    then 
+        mkdir $directory 
+    fi
+done 
+
 # Run 
 for option in ${COREF_OPTIONS[@]}; do
     filename="ed_coref_${option}"
