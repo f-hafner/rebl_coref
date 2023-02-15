@@ -88,7 +88,9 @@ Details
 
 ## Looking at the data
 
-The notebook `overview.ipynb` collects the data from the experiments above, evaluates predictions and makes some plots. 
-Everything is then also discussed in text form in /tex/coreferes.tex. The data in the tables are not automatically updated.
+1. The notebook `analysis.ipynb` collects the data from the experiments above, evaluates predictions and makes some plots. 
+    - update the path to the data in the first cell 
+2. Everything is then also discussed in text form in /tex/coreferes.tex. The data in the tables are not automatically updated.
 
 XXX: need also environment for the notebook! 
+XXX: add also the script for checking the lsh performance?
