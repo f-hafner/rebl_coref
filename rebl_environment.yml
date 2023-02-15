@@ -1,0 +1,14 @@
+name: rebl-coref
+channels:
+  - defaults
+  # - conda-forge
+dependencies:
+  - python =3.6
+  - ipykernel
+  - numpy 
+  - pandas 
+  - matplotlib
+  - pyarrow
+  - pip 
+
+# it works without pyarrow, and with python==3.8

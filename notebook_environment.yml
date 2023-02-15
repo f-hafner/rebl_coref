@@ -1,0 +1,10 @@
+name: rel-notebook
+channels:
+  - defaults
+dependencies:
+  - python 
+  - ipykernel
+  - numpy 
+  - pandas 
+  - matplotlib
+  - pyarrow
