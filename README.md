@@ -51,7 +51,7 @@ git clone git@github.com:f-hafner/rel_coref_experiments.git
 # set up environment for REBL
 cd rel_coref_experiments 
 conda activate 
-conda env create --prefix ./rebl_env --file rebl_environment.yml
+conda env create --prefix ./rebl_env --file envs/rebl_environment.yml
 
 conda activate ./rebl_env
 pip install ../REBL/
@@ -92,7 +92,7 @@ Details
 We'll need another environment for the notebook.
 ```bash
 conda activate 
-conda env create --file notebook_environment.yml --prefix ./notebook_env
+conda env create --file envs/notebook_environment.yml --prefix ./notebook_env
 ```
 
 1. The notebook `analysis.ipynb` collects the data from the experiments above, evaluates predictions and makes some plots. 
