@@ -18,7 +18,7 @@ data
     |   ...
 |___ wiki_2019
     |   ...
-|___ msmarco
+|___ msmarco_large_extract
     |   sample_1k_longdocs.parquet
     |   sample_1k_longdocs.gz
 |___ efficiency_test
