@@ -116,7 +116,7 @@ I assess the effectiveness of the three options on the AIDA data, and the effici
 
 In what follows, I define coreferring mentions as mentions like the mention ``Hendrix'' above, and non-coreferring mentions as all other mentions.
 
-The calculations are run on the CPUs of a DAS6 cluster, Flair and Wikipedia 2019 for mention detection. I set the limit number of documents from AIDA to 500, which processes all documents. 
+The calculations are run on the CPUs of a DAS6 cluster, using Flair and the Wikipedia dump from 2019 for mention detection. I set the limit number of documents from AIDA to 500, which processes all documents. 
 For the moment, I hard-code the settings for LSH in REL. The precision-recall tradeoff in LSH means that a higher recall for LSH results in a longer running time of coreference search because, for each mention, \verb|with_coref| checks more mentions. 
 The current settings are set to maximize the F-score for LSH on the coreferring mentions in AIDA.
 
@@ -220,7 +220,7 @@ The figure shows considerable variation in the overlap of the predicted entities
 \begin{figure}[H]
   \centering
   \includegraphics[width = 0.8\textwidth]{../figs/msmarco_overlap_off.pdf}
-  \caption{Overlap in predicted entities, by mention type. The unit of observation is the document.}
+  \caption{Overlap in predicted entities, by mention type. The panels refer to all mentions, coreferring mentions and non-coreferring mentions; each mention is either coreferring or not. The unit of observation is the document. }
   \label{fig:msmarco_overlap_off}
 \end{figure}
 
@@ -231,7 +231,7 @@ Overall, however, there is no obvious correlation between the number of mentions
 \begin{figure}[H]
   \centering
   \includegraphics[width = 0.8\textwidth]{../figs/msmarco_overlap_lsh.pdf}
-  \caption{Overlap in predicted entities, by mention type. The unit of observation is the document.}
+  \caption{Overlap in predicted entities, by mention type. The panels refer to all mentions, coreferring mentions and non-coreferring mentions; each mention is either coreferring or not. The unit of observation is the document. }
   \label{fig:msmarco_overlap_lsh}
 \end{figure}
 
@@ -245,7 +245,7 @@ These patterns are consistent with three facts: the theoretical quadratic $O(n^2
 \begin{figure}[H]
   \centering
   \includegraphics[width = 0.8\textwidth]{../figs/timing_msmarco.pdf}
-  \caption{Time complexity on msmarco data for options ``all'' and ``off''. The unit of observation is the document.}
+  \caption{Time complexity on msmarco data for options ``all'', ``lsh'' and ``off''. The unit of observation is the document.}
   \label{fig:timing_msmarco}
 \end{figure}
 
