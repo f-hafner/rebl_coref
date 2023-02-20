@@ -95,6 +95,12 @@ conda activate
 conda env create --file envs/notebook_environment.yml --prefix ./notebook_env
 ```
 
-1. The notebook `analysis.ipynb` collects the data from the experiments above, evaluates predictions and makes some plots. 
-    - update the path to the data in the first cell 
-2. Everything is then also discussed in text form in /tex/coreferes.tex. The data in the tables are not automatically updated.
+In the folder `output_data` are the files created during my experiments. These experiments were run on the [DAS-6 cluster](https://www.cs.vu.nl/das/), using CPUs only.
+- `msmarco`: results from running REBL above
+    - `predictions`: predicted entities, for all documents together.
+    - `profile`: profiling output from ED step 
+- `efficiency_test`: results from running efficiency test above
+    - `predictions`: predicted entities, for all documents together.
+    - `timing`: timing for ED, for each document separately.
+
+These outputs are processed in the notebook `analysis.ipynb`, which  evaluates predictions and makes some plots. Everything is then also discussed in text form in /tex/coreferes.tex. The data in the tables are not automatically updated.
