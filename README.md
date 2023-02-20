@@ -103,4 +103,4 @@ In the folder `output_data` are the files created during my experiments. These e
     - `predictions`: predicted entities, for all documents together.
     - `timing`: timing for ED, for each document separately.
 
-These outputs are processed in the notebook `analysis.ipynb`, which  evaluates predictions and makes some plots. Everything is then also discussed in text form in /tex/coreferes.tex. The data in the tables are not automatically updated.
+These outputs are processed in the notebook `analysis.ipynb`, which  evaluates predictions and makes some plots. Everything is then also discussed in text form in /tex/coreferences.tex. The data in the tables are not automatically updated.
